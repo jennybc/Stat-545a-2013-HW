@@ -5,7 +5,7 @@ In this project, we will use adult data set which is available from this [`websi
 ### How to replicate my analysis?
 * Download the following files, from [Github](https://github.com/atante/Stat-545a-2013-HW.git), into an empty directory:
 
-     - Input data: [`adult_raw.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_raw.txt)
+    - Input data: [`adult_raw.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_raw.txt)
     - Scripts: [`01_dataTransformation.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/01_dataTransformation.R), [`02_variableBining.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/02_variableBining.R), [`03_variableSelections.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/03_variableSelections.R), [`04_aggregatePlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/04_aggregatePlot.R), [`05_mapPlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/05_mapPlot.R), and [`06_dendrogramPlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/06_dendrogramPlot.R)
     - Makefile: [`Makefile`](https://github.com/atante/Stat-545a-2013-HW/blob/master/Makefile)
     - R `markdown` file: [`stat545a-2013-hw06_mohdabulbasher-abd.Rmd`](https://github.com/atante/Stat-545a-2013-HW/blob/master/stat545a-2013-hw06_mohdabulbasher-abd.Rmd)
@@ -41,14 +41,14 @@ In this project, we will use adult data set which is available from this [`websi
 ### Plotting world map using `ggplot2`    
 * In a shell write `make mapPlot` and it will run `05_mapPlot.R` script that depends on `03_variableSelections.R` script which subsequently depends on `02_variableBining.R` and `01_dataTransformation.R`. You should see the followings:
 
-     - [`worldmap.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap.png) which represents the world map filled with regions.
+    - [`worldmap.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap.png) which represents the world map filled with regions.
     - [`worldmap_interestedcountries.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap_interestedcountries.png) which represents the filled countries that are only recorded in adult data.
     - [`worldmap_medianAge.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap_medianAge.png) which represents the world map according to the median age per country.
 
 ### Plotting dendrogram using `ggplot2`    
 * In a shell write `make dendrogramPlot` and it will run `06_dendrogramPlot.R` script that depends on `02_variableBining.R` script which subsequently depends on `01_dataTransformation.R`. You should see the followings:
 
-     - [`dendrogram.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/dendrogram.png) a dendrogram figure that identifies correlations between the observations of continous variables.
+    - [`dendrogram.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/dendrogram.png) a dendrogram figure that identifies correlations between the observations of continous variables.
     - [`hoursWeek_educationNum.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/hoursWeek_educationNum.png) that demonstrates the relationship between hours per week with the education level.
 
 ### Creating HTML from R `markdown`.
