@@ -1,140 +1,311 @@
 <!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
 <title>STAT 545A Homework 6</title>
 
+
+
+
+
 <style type="text/css">
-body, td {
-   font-family: sans-serif;
+body {
+   font-family: Helvetica, arial, sans-serif;
+   font-size: 14px;
+   line-height: 1.6;
+   padding-top: 10px;
+   padding-bottom: 10px;
    background-color: white;
-   font-size: 12px;
-   margin: 8px;
-}
+   padding: 30px; }
 
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
+body > *:first-child {
+   margin-top: 0 !important; }
+body > *:last-child {
+   margin-bottom: 0 !important; }
 
-h1 { 
-   font-size:2.2em; 
-}
+a {
+   color: #4183C4; }
+a.absent {
+   color: #cc0000; }
+a.anchor {
+   display: block;
+   padding-left: 30px;
+   margin-left: -30px;
+   cursor: pointer;
+   position: absolute;
+   top: 0;
+   left: 0;
+   bottom: 0; }
 
-h2 { 
-   font-size:1.8em; 
-}
+h1, h2, h3, h4, h5, h6 {
+   margin: 20px 0 10px;
+   padding: 0;
+   font-weight: bold;
+   -webkit-font-smoothing: antialiased;
+   cursor: text;
+   position: relative; }
 
-h3 { 
-   font-size:1.4em; 
-}
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+   text-decoration: none; }
 
-h4 { 
-   font-size:1.0em; 
-}
+h1 tt, h1 code {
+   font-size: inherit; }
 
-h5 { 
-   font-size:0.9em; 
-}
+h2 tt, h2 code {
+   font-size: inherit; }
 
-h6 { 
-   font-size:0.8em; 
-}
+h3 tt, h3 code {
+   font-size: inherit; }
 
-a:visited {
-   color: rgb(50%, 0%, 50%);
-}
+h4 tt, h4 code {
+   font-size: inherit; }
 
-pre {	
-   margin-top: 0;
-   max-width: 95%;
-   border: 1px solid #ccc;
-   white-space: pre-wrap;
-}
+h5 tt, h5 code {
+   font-size: inherit; }
 
-pre code {
-   display: block; padding: 0.5em;
-}
+h6 tt, h6 code {
+   font-size: inherit; }
 
-code.r, code.cpp {
-   background-color: #F8F8F8;
-}
+h1 {
+   font-size: 28px;
+   color: black; }
 
-table, td, th {
-  border: none;
-}
+h2 {
+   font-size: 24px;
+   border-bottom: 1px solid #cccccc;
+   color: black; }
 
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
+h3 {
+   font-size: 18px; }
+
+h4 {
+   font-size: 16px; }
+
+h5 {
+   font-size: 14px; }
+
+h6 {
+   color: #777777;
+   font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+   margin: 15px 0; }
 
 hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
+   border: 0 none;
+   color: #cccccc;
+   height: 4px;
+   padding: 0;
 }
 
+body > h2:first-child {
+   margin-top: 0;
+   padding-top: 0; }
+body > h1:first-child {
+   margin-top: 0;
+   padding-top: 0; }
+body > h1:first-child + h2 {
+   margin-top: 0;
+   padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+   margin-top: 0;
+   padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+   margin-top: 0;
+   padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+   margin-top: 0; }
+
+li p.first {
+   display: inline-block; }
+li {
+   margin: 0; }
+ul, ol {
+   padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+   margin-top: 0; }
+
+dl {
+   padding: 0; }
+dl dt {
+   font-size: 14px;
+   font-weight: bold;
+   font-style: italic;
+   padding: 0;
+   margin: 15px 0 5px; }
+dl dt:first-child {
+   padding: 0; }
+dl dt > :first-child {
+   margin-top: 0; }
+dl dt > :last-child {
+   margin-bottom: 0; }
+dl dd {
+   margin: 0 0 15px;
+   padding: 0 15px; }
+dl dd > :first-child {
+   margin-top: 0; }
+dl dd > :last-child {
+   margin-bottom: 0; }
+
+blockquote {
+   border-left: 4px solid #dddddd;
+   padding: 0 15px;
+   color: #777777; }
+blockquote > :first-child {
+   margin-top: 0; }
+blockquote > :last-child {
+   margin-bottom: 0; }
+
+table {
+   padding: 0;border-collapse: collapse; }
+table tr {
+   border-top: 1px solid #cccccc;
+   background-color: white;
+   margin: 0;
+   padding: 0; }
+table tr:nth-child(2n) {
+   background-color: #f8f8f8; }
+table tr th {
+   font-weight: bold;
+   border: 1px solid #cccccc;
+   margin: 0;
+   padding: 6px 13px; }
+table tr td {
+   border: 1px solid #cccccc;
+   margin: 0;
+   padding: 6px 13px; }
+table tr th :first-child, table tr td :first-child {
+   margin-top: 0; }
+table tr th :last-child, table tr td :last-child {
+   margin-bottom: 0; }
+
+img {
+   max-width: 100%; }
+
+span.frame {
+   display: block;
+   overflow: hidden; }
+span.frame > span {
+   border: 1px solid #dddddd;
+   display: block;
+   float: left;
+   overflow: hidden;
+   margin: 13px 0 0;
+   padding: 7px;
+   width: auto; }
+span.frame span img {
+   display: block;
+   float: left; }
+span.frame span span {
+   clear: both;
+   color: #333333;
+   display: block;
+   padding: 5px 0 0; }
+span.align-center {
+   display: block;
+   overflow: hidden;
+   clear: both; }
+span.align-center > span {
+   display: block;
+   overflow: hidden;
+   margin: 13px auto 0;
+   text-align: center; }
+span.align-center span img {
+   margin: 0 auto;
+   text-align: center; }
+span.align-right {
+   display: block;
+   overflow: hidden;
+   clear: both; }
+span.align-right > span {
+   display: block;
+   overflow: hidden;
+   margin: 13px 0 0;
+   text-align: right; }
+span.align-right span img {
+   margin: 0;
+   text-align: right; }
+span.float-left {
+   display: block;
+   margin-right: 13px;
+   overflow: hidden;
+   float: left; }
+span.float-left span {
+   margin: 13px 0 0; }
+span.float-right {
+   display: block;
+   margin-left: 13px;
+   overflow: hidden;
+   float: right; }
+span.float-right > span {
+   display: block;
+   overflow: hidden;
+   margin: 13px auto 0;
+   text-align: right; }
+
+code, tt {
+   margin: 0 2px;
+   padding: 0 5px;
+   white-space: nowrap;
+   border: 1px solid #eaeaea;
+   background-color: #f8f8f8;
+   border-radius: 3px; }
+
+pre code {
+   margin: 0;
+   padding: 0;
+   white-space: pre;
+   border: none;
+   background: transparent; }
+
+.highlight pre {
+   background-color: #f8f8f8;
+   border: 1px solid #cccccc;
+   font-size: 13px;
+   line-height: 19px;
+   overflow: auto;
+   padding: 6px 10px;
+   border-radius: 3px; }
+
+pre {
+   background-color: #f8f8f8;
+   border: 1px solid #cccccc;
+   font-size: 13px;
+   line-height: 19px;
+   overflow: auto;
+   padding: 6px 10px;
+   border-radius: 3px; }
+pre code, pre tt {
+   background-color: transparent;
+   border: none; }
+
+sup {
+   font-size: 0.83em;
+   vertical-align: super;
+   line-height: 0;
+}
+* {
+	 -webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+   body {
+      width: 854px;
+      margin:0 auto;
+   }
+}
 @media print {
-   * { 
-      background: transparent !important; 
-      color: black !important; 
-      filter:none !important; 
-      -ms-filter: none !important; 
-   }
-
-   body { 
-      font-size:12pt; 
-      max-width:100%; 
-   }
-       
-   a, a:visited { 
-      text-decoration: underline; 
-   }
-
-   hr { 
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote { 
-      padding-right: 1em; 
-      page-break-inside: avoid; 
-   }
-
-   tr, img { 
-      page-break-inside: avoid; 
-   }
-
-   img { 
-      max-width: 100% !important; 
-   }
-
-   @page :left { 
-      margin: 15mm 20mm 15mm 10mm; 
-   }
-     
-   @page :right { 
-      margin: 15mm 10mm 15mm 20mm; 
-   }
-
-   p, h2, h3 { 
-      orphans: 3; widows: 3; 
-   }
-
-   h2, h3 { 
-      page-break-after: avoid; 
-   }
+	 table, pre {
+		  page-break-inside: avoid;
+	 }
+	 pre {
+		  word-wrap: break-word;
+	 }
 }
-
 </style>
-
-
 
 
 
@@ -148,14 +319,18 @@ hr {
 <h3>How to replicate my analysis?</h3>
 
 <ul>
-<li><p>Download the following files into an empty directory:</p>
+<li><p>Download the following files, from <a href="https://github.com/atante/Stat-545a-2013-HW.git">Github</a>, into an empty directory:</p>
 
 <ul>
-<li>Input data: <a href=""><code>adult_raw.txt</code></a></li>
-<li>Scripts: <a href=""><code>01_dataTransformation.R</code></a>, <a href=""><code>02_variableBining.R</code></a>, <a href=""><code>03_variableSelections.R</code></a>, <a href=""><code>04_aggregatePlot.R</code></a>, <a href=""><code>05_mapPlot.R</code></a>, and <a href=""><code>06_dendrogramPlot.R</code></a></li>
-<li>Makefile: <a href=""><code>Makefile</code></a></li>
-<li>R <code>markdown</code> file: <a href=""><code>stat545a-2013-hw06_mohdabulbasher-abd.Rmd</code></a></li>
+<li>Input data: <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_raw.txt"><code>adult_raw.txt</code></a>
+
+<ul>
+<li>Scripts: <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/01_dataTransformation.R"><code>01_dataTransformation.R</code></a>, <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/02_variableBining.R"><code>02_variableBining.R</code></a>, <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/03_variableSelections.R"><code>03_variableSelections.R</code></a>, <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/04_aggregatePlot.R"><code>04_aggregatePlot.R</code></a>, <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/05_mapPlot.R"><code>05_mapPlot.R</code></a>, and <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/06_dendrogramPlot.R"><code>06_dendrogramPlot.R</code></a></li>
+<li>Makefile: <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/Makefile"><code>Makefile</code></a></li>
+<li>R <code>markdown</code> file: <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/stat545a-2013-hw06_mohdabulbasher-abd.Rmd"><code>stat545a-2013-hw06_mohdabulbasher-abd.Rmd</code></a></li>
 </ul></li>
+</ul></li>
+<li><p>You might need to right click on a file to see or to download it on your machine.</p></li>
 <li><p>After you have downloaded all the files, you can manage to run scripts that does the followings:</p>
 
 <ul>
@@ -173,9 +348,9 @@ hr {
 <li><p>We have three scripts that perform cleanings:</p>
 
 <ul>
-<li><code>01_dataTransformation.R</code>. This script cleans the raw data <code>adult_raw.txt</code>. To run this script, in a shell write <code>make adult_clean</code>. You should see a new data named by <a href=""><code>adult_clean.txt</code></a>.</li>
-<li><code>02_variableBining.R</code>. This script performs age binning on <code>adult_clean.txt</code>. Thus it depends on <code>01_dataTransformation.R</code>. The resulted data is required by <code>04_aggregatePlot.R</code> and <code>06_dendrogramPlot.R</code>. To run this script, in a shell write <code>make adult_clean_binned</code>. You should see a new data named by <a href=""><code>adult_clean_binned.txt</code></a>.</li>
-<li><code>03_variableSelections.R</code>. This script selects important variables and removes the redundant ones on <code>adult_clean_binned.txt</code>. Thus it depends on <code>02_variableBining.R</code>. This data is required by <code>05_mapPlot.R</code>. To run this script, in a shell write <code>make adult_clean_selected</code>. You should see a new data named by <a href=""><code>adult_clean_selected.txt</code></a>.</li>
+<li><code>01_dataTransformation.R</code>. This script cleans the raw data <code>adult_raw.txt</code>. To run this script, in a shell write <code>make adult_clean</code>. You should see a new data named by <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean.txt"><code>adult_clean.txt</code></a>.</li>
+<li><code>02_variableBining.R</code>. This script performs age binning on <code>adult_clean.txt</code>. Thus it depends on <code>01_dataTransformation.R</code>. The resulted data is required by <code>04_aggregatePlot.R</code> and <code>06_dendrogramPlot.R</code>. To run this script, in a shell write <code>make adult_clean_binned</code>. You should see a new data named by <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean_binned.txt"><code>adult_clean_binned.txt</code></a>.</li>
+<li><code>03_variableSelections.R</code>. This script selects important variables and removes the redundant ones on <code>adult_clean_binned.txt</code>. Thus it depends on <code>02_variableBining.R</code>. This data is required by <code>05_mapPlot.R</code>. To run this script, in a shell write <code>make adult_clean_selected</code>. You should see a new data named by <a href="https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean_selected.txt"><code>adult_clean_selected.txt</code></a>.</li>
 </ul></li>
 </ul>
 
@@ -185,14 +360,14 @@ hr {
 <li><p>In a shell write <code>make aggregatePlot</code> and it will run <code>04_aggregatePlot.R</code> script that depends on <code>02_variableBining.R</code> script which subsequently depends on <code>01_dataTransformation.R</code>. You should see the followings:</p>
 
 <ul>
-<li><a href="allInone.png"><code>allInone.png</code></a> that illustrates on how to put several figures onto one panel.</li>
-<li><a href="barplot_educationByagedesc.png"><code>barplot_educationByagedesc.png</code></a> that represents education level with specific age intervals</li>
-<li><a href="barplot_educationByemptype.png"><code>barplot_educationByemptype.png</code></a> which represents the type of employment with level of educations.</li>
-<li><a href="barplot_educationBymarital.png"><code>barplot_educationBymarital.png</code></a> which represents the status of relationships with level of educations.</li>
-<li><a href="barplot_educationByobs.png"><code>barplot_educationByobs.png</code></a> which represents the education level per gender.</li>
-<li><a href="barplot_educationByobsprop.png"><code>barplot_educationByobsprop.png</code></a> which represents the proportions of each gender according to their level of education.</li>
-<li><a href="barplot_educationByrace.png"><code>barplot_educationByrace.png</code></a> which represents the number of educated people based on their ethnicity.</li>
-<li><a href="boxplot_educationByage.png"><code>boxplot_educationByage.png</code></a> which represents an overview of how the age variable is distributed with gender.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/allInone.png"><code>allInone.png</code></a> that illustrates on how to put several figures onto one panel.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByagedesc.png"><code>barplot_educationByagedesc.png</code></a> that represents education level with specific age intervals</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByemptype.png"><code>barplot_educationByemptype.png</code></a> which represents the type of employment with level of educations.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationBymarital.png"><code>barplot_educationBymarital.png</code></a> which represents the status of relationships with level of educations.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByobs.png"><code>barplot_educationByobs.png</code></a> which represents the education level per gender.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByobsprop.png"><code>barplot_educationByobsprop.png</code></a> which represents the proportions of each gender according to their level of education.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByrace.png"><code>barplot_educationByrace.png</code></a> which represents the number of educated people based on their ethnicity.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/boxplot_educationByage.png"><code>boxplot_educationByage.png</code></a> which represents an overview of how the age variable is distributed with gender.</li>
 </ul></li>
 </ul>
 
@@ -202,9 +377,12 @@ hr {
 <li><p>In a shell write <code>make mapPlot</code> and it will run <code>05_mapPlot.R</code> script that depends on <code>03_variableSelections.R</code> script which subsequently depends on <code>02_variableBining.R</code> and <code>01_dataTransformation.R</code>. You should see the followings:</p>
 
 <ul>
-<li><a href="worldmap.png"><code>worldmap.png</code></a> which represents the world map filled with regions.</li>
-<li><a href="worldmap_interestedcountries.png"><code>worldmap_interestedcountries.png</code></a> which represents the filled countries that are only recorded in adult data.</li>
-<li><a href="worldmap_medianAge.png"><code>worldmap_medianAge.png</code></a> which represents the world map according to the median age per country.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap.png"><code>worldmap.png</code></a> which represents the world map filled with regions.
+
+<ul>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap_interestedcountries.png"><code>worldmap_interestedcountries.png</code></a> which represents the filled countries that are only recorded in adult data.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap_medianAge.png"><code>worldmap_medianAge.png</code></a> which represents the world map according to the median age per country.</li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -214,14 +392,17 @@ hr {
 <li><p>In a shell write <code>make dendrogramPlot</code> and it will run <code>06_dendrogramPlot.R</code> script that depends on <code>02_variableBining.R</code> script which subsequently depends on <code>01_dataTransformation.R</code>. You should see the followings:</p>
 
 <ul>
-<li><a href="dendrogram.png"><code>dendrogram.png</code></a> a dendrogram figure that identifies correlations between the observations of continous variables.</li>
-<li><a href="hoursWeek_educationNum.png"><code>hoursWeek_educationNum.png</code></a> that demonstrates the relationship between hours per week with the education level.</li>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/dendrogram.png"><code>dendrogram.png</code></a> a dendrogram figure that identifies correlations between the observations of continous variables.
+
+<ul>
+<li><a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/hoursWeek_educationNum.png"><code>hoursWeek_educationNum.png</code></a> that demonstrates the relationship between hours per week with the education level.</li>
+</ul></li>
 </ul></li>
 </ul>
 
 <h3>Creating HTML from R <code>markdown</code>.</h3>
 
-<p>To create this HTML file, you need to download R <code>markdown</code> file <a href=""><code>stat545a-2013-hw06_mohdabulbasher-abd.Rmd</code></a>. In a shell, give this command <code>make rmdToHtml</code> and you should see the html file <a href="stat545a-2013-hw06_mohdabulbasher-abd.html"><code>stat545a-2013-hw06_mohdabulbasher-abd.html</code></a>.</p>
+<p>To create this HTML file, give this command in a shell <code>make rmdToHtml</code> and you should see the html file <a href="https://raw.github.com/atante/Stat-545a-2013-HW/master/stat545a-2013-hw06_mohdabulbasher-abd.html"><code>stat545a-2013-hw06_mohdabulbasher-abd.html</code></a>.</p>
 
 <h3>Conclusion</h3>
 
@@ -249,7 +430,10 @@ hr {
 <li><p>To re-run the scripts or remove the outputs, write in a shell <code>make clean</code>.</p></li>
 </ul>
 
+<blockquote>
+<p>Thank you Jenny for being the person who taught us how to appreciate the art of R language. We had a great time last six weeks.</p>
+</blockquote>
+
 </body>
 
 </html>
-
