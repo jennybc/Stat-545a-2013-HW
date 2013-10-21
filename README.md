@@ -5,10 +5,10 @@ In this project, we will use adult data set which is available from this [`websi
 ### How to replicate my analysis?
 * Download the following files into an empty directory:
 
-    - Input data: [`adult_raw.txt`]()
-    - Scripts: [`01_dataTransformation.R`](), [`02_variableBining.R`](), [`03_variableSelections.R`](), [`04_aggregatePlot.R`](), [`05_mapPlot.R`](), and [`06_dendrogramPlot.R`]()
-    - Makefile: [`Makefile`]()
-    - R `markdown` file: [`stat545a-2013-hw06_mohdabulbasher-abd.Rmd`]()
+    - Input data: [`adult_raw.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_raw.txt)
+    - Scripts: [`01_dataTransformation.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/01_dataTransformation.R), [`02_variableBining.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/02_variableBining.R), [`03_variableSelections.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/03_variableSelections.R), [`04_aggregatePlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/04_aggregatePlot.R), [`05_mapPlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/05_mapPlot.R), and [`06_dendrogramPlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/06_dendrogramPlot.R)
+    - Makefile: [`Makefile`](https://github.com/atante/Stat-545a-2013-HW/blob/master/Makefile)
+    - R `markdown` file: [`stat545a-2013-hw06_mohdabulbasher-abd.Rmd`](https://github.com/atante/Stat-545a-2013-HW/blob/master/stat545a-2013-hw06_mohdabulbasher-abd.Rmd)
 
 * After you have downloaded all the files, you can manage to run scripts that does the followings:
 
@@ -52,7 +52,7 @@ In this project, we will use adult data set which is available from this [`websi
     - [`hoursWeek_educationNum.png`](hoursWeek_educationNum.png) that demonstrates the relationship between hours per week with the education level.
 
 ### Creating HTML from R `markdown`.
-To create this HTML file, you need to download R `markdown` file [`stat545a-2013-hw06_mohdabulbasher-abd.Rmd`](). In a shell, give this command `make rmdToHtml` and you should see the html file [`stat545a-2013-hw06_mohdabulbasher-abd.html`](stat545a-2013-hw06_mohdabulbasher-abd.html).
+To create this HTML file, give this command in a shell `make rmdToHtml` and you should see the html file [`stat545a-2013-hw06_mohdabulbasher-abd.html`](stat545a-2013-hw06_mohdabulbasher-abd.html).
 
 ### Conclusion
 * To run all the scripts in one command, write in a shell `make` or `make all` and you should see after running the pipeline:
