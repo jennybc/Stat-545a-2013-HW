@@ -28,31 +28,31 @@ In this project, we will use adult data set which is available from this [`websi
 ### Plotting simple figures using `ggplot2`
 * In a shell write `make aggregatePlot` and it will run `04_aggregatePlot.R` script that depends on `02_variableBining.R` script which subsequently depends on `01_dataTransformation.R`. You should see the followings:
 
-    - [`allInone.png`](allInone.png) that illustrates on how to put several figures onto one panel.
-    - [`barplot_educationByagedesc.png`](barplot_educationByagedesc.png) that represents education level with specific age intervals
-    - [`barplot_educationByemptype.png`](barplot_educationByemptype.png) which represents the type of employment with level of educations.
-    - [`barplot_educationBymarital.png`](barplot_educationBymarital.png) which represents the status of relationships with level of educations.
-    - [`barplot_educationByobs.png`](barplot_educationByobs.png) which represents the education level per gender.
-    - [`barplot_educationByobsprop.png`](barplot_educationByobsprop.png) which represents the proportions of each gender according to their level of education.
-    - [`barplot_educationByrace.png`](barplot_educationByrace.png) which represents the number of educated people based on their ethnicity.
-    - [`boxplot_educationByage.png`](boxplot_educationByage.png) which represents an overview of how the age variable is distributed with gender.
+    - [`allInone.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/allInone.png) that illustrates on how to put several figures onto one panel.
+    - [`barplot_educationByagedesc.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByagedesc.png) that represents education level with specific age intervals
+    - [`barplot_educationByemptype.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByemptype.png) which represents the type of employment with level of educations.
+    - [`barplot_educationBymarital.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationBymarital.png) which represents the status of relationships with level of educations.
+    - [`barplot_educationByobs.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByobs.png) which represents the education level per gender.
+    - [`barplot_educationByobsprop.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByobsprop.png) which represents the proportions of each gender according to their level of education.
+    - [`barplot_educationByrace.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByrace.png) which represents the number of educated people based on their ethnicity.
+    - [`boxplot_educationByage.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/boxplot_educationByage.png) which represents an overview of how the age variable is distributed with gender.
 
 ### Plotting world map using `ggplot2`    
 * In a shell write `make mapPlot` and it will run `05_mapPlot.R` script that depends on `03_variableSelections.R` script which subsequently depends on `02_variableBining.R` and `01_dataTransformation.R`. You should see the followings:
 
-    - [`worldmap.png`](worldmap.png) which represents the world map filled with regions.
-    - [`worldmap_interestedcountries.png`](worldmap_interestedcountries.png) which represents the filled countries that are only recorded in adult data.
-    - [`worldmap_medianAge.png`](worldmap_medianAge.png) which represents the world map according to the median age per country.
+    - [`worldmap.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap.png) which represents the world map filled with regions.
+    - [`worldmap_interestedcountries.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap_interestedcountries.png) which represents the filled countries that are only recorded in adult data.
+    - [`worldmap_medianAge.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap_medianAge.png) which represents the world map according to the median age per country.
 
 
 ### Plotting dendrogram using `ggplot2`    
 * In a shell write `make dendrogramPlot` and it will run `06_dendrogramPlot.R` script that depends on `02_variableBining.R` script which subsequently depends on `01_dataTransformation.R`. You should see the followings:
 
-    - [`dendrogram.png`](dendrogram.png) a dendrogram figure that identifies correlations between the observations of continous variables.
-    - [`hoursWeek_educationNum.png`](hoursWeek_educationNum.png) that demonstrates the relationship between hours per week with the education level.
+    - [`dendrogram.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/dendrogram.png) a dendrogram figure that identifies correlations between the observations of continous variables.
+    - [`hoursWeek_educationNum.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/hoursWeek_educationNum.png) that demonstrates the relationship between hours per week with the education level.
 
 ### Creating HTML from R `markdown`.
-To create this HTML file, give this command in a shell `make rmdToHtml` and you should see the html file [`stat545a-2013-hw06_mohdabulbasher-abd.html`](stat545a-2013-hw06_mohdabulbasher-abd.html).
+To create this HTML file, give this command in a shell `make rmdToHtml` and you should see the html file [`stat545a-2013-hw06_mohdabulbasher-abd.html`](https://raw.github.com/atante/Stat-545a-2013-HW/master/stat545a-2013-hw06_mohdabulbasher-abd.html).
 
 ### Conclusion
 * To run all the scripts in one command, write in a shell `make` or `make all` and you should see after running the pipeline:
