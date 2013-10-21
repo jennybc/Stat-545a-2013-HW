@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>STAT 545A Homework 6</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>STAT 545A Homework 6</h1>
+
+<p>In this project, we will use adult data set which is available from this <a href="http://archive.ics.uci.edu/ml/datasets/Adult"><code>website</code></a>. The data is already being transformed and cleaned. However, we need to perform further cleanings to demonstrate the results that we obtained.</p>
+
+<h3>How to replicate my analysis?</h3>
+
+<ul>
+<li><p>Download the following files into an empty directory:</p>
+
+<ul>
+<li>Input data: <a href=""><code>adult_raw.txt</code></a></li>
+<li>Scripts: <a href=""><code>01_dataTransformation.R</code></a>, <a href=""><code>02_variableBining.R</code></a>, <a href=""><code>03_variableSelections.R</code></a>, <a href=""><code>04_aggregatePlot.R</code></a>, <a href=""><code>05_mapPlot.R</code></a>, and <a href=""><code>06_dendrogramPlot.R</code></a></li>
+<li>Makefile: <a href=""><code>Makefile</code></a></li>
+<li>R <code>markdown</code> file: <a href=""><code>stat545a-2013-hw06_mohdabulbasher-abd.Rmd</code></a></li>
+</ul></li>
+<li><p>After you have downloaded all the files, you can manage to run scripts that does the followings:</p>
+
+<ul>
+<li>Transforming the <code>adult</code> data.</li>
+<li>Plotting simple figures using <code>ggplot2</code>.</li>
+<li>Plotting world map using <code>ggplot2</code>.</li>
+<li>Plotting dendrogram using <code>ggplot2</code>.</li>
+<li>Creating HTML from R <code>markdown</code>.</li>
+</ul></li>
+</ul>
+
+<h3>Transforming the <code>adult</code> data</h3>
+
+<ul>
+<li><p>We have three scripts that perform cleanings:</p>
+
+<ul>
+<li><code>01_dataTransformation.R</code>. This script cleans the raw data <code>adult_raw.txt</code>. To run this script, in a shell write <code>make adult_clean</code>. You should see a new data named by <a href=""><code>adult_clean.txt</code></a>.</li>
+<li><code>02_variableBining.R</code>. This script performs age binning on <code>adult_clean.txt</code>. Thus it depends on <code>01_dataTransformation.R</code>. The resulted data is required by <code>04_aggregatePlot.R</code> and <code>06_dendrogramPlot.R</code>. To run this script, in a shell write <code>make adult_clean_binned</code>. You should see a new data named by <a href=""><code>adult_clean_binned.txt</code></a>.</li>
+<li><code>03_variableSelections.R</code>. This script selects important variables and removes the redundant ones on <code>adult_clean_binned.txt</code>. Thus it depends on <code>02_variableBining.R</code>. This data is required by <code>05_mapPlot.R</code>. To run this script, in a shell write <code>make adult_clean_selected</code>. You should see a new data named by <a href=""><code>adult_clean_selected.txt</code></a>.</li>
+</ul></li>
+</ul>
+
+<h3>Plotting simple figures using <code>ggplot2</code></h3>
+
+<ul>
+<li><p>In a shell write <code>make aggregatePlot</code> and it will run <code>04_aggregatePlot.R</code> script that depends on <code>02_variableBining.R</code> script which subsequently depends on <code>01_dataTransformation.R</code>. You should see the followings:</p>
+
+<ul>
+<li><a href="allInone.png"><code>allInone.png</code></a> that illustrates on how to put several figures onto one panel.</li>
+<li><a href="barplot_educationByagedesc.png"><code>barplot_educationByagedesc.png</code></a> that represents education level with specific age intervals</li>
+<li><a href="barplot_educationByemptype.png"><code>barplot_educationByemptype.png</code></a> which represents the type of employment with level of educations.</li>
+<li><a href="barplot_educationBymarital.png"><code>barplot_educationBymarital.png</code></a> which represents the status of relationships with level of educations.</li>
+<li><a href="barplot_educationByobs.png"><code>barplot_educationByobs.png</code></a> which represents the education level per gender.</li>
+<li><a href="barplot_educationByobsprop.png"><code>barplot_educationByobsprop.png</code></a> which represents the proportions of each gender according to their level of education.</li>
+<li><a href="barplot_educationByrace.png"><code>barplot_educationByrace.png</code></a> which represents the number of educated people based on their ethnicity.</li>
+<li><a href="boxplot_educationByage.png"><code>boxplot_educationByage.png</code></a> which represents an overview of how the age variable is distributed with gender.</li>
+</ul></li>
+</ul>
+
+<h3>Plotting world map using <code>ggplot2</code></h3>
+
+<ul>
+<li><p>In a shell write <code>make mapPlot</code> and it will run <code>05_mapPlot.R</code> script that depends on <code>03_variableSelections.R</code> script which subsequently depends on <code>02_variableBining.R</code> and <code>01_dataTransformation.R</code>. You should see the followings:</p>
+
+<ul>
+<li><a href="worldmap.png"><code>worldmap.png</code></a> which represents the world map filled with regions.</li>
+<li><a href="worldmap_interestedcountries.png"><code>worldmap_interestedcountries.png</code></a> which represents the filled countries that are only recorded in adult data.</li>
+<li><a href="worldmap_medianAge.png"><code>worldmap_medianAge.png</code></a> which represents the world map according to the median age per country.</li>
+</ul></li>
+</ul>
+
+<h3>Plotting dendrogram using <code>ggplot2</code></h3>
+
+<ul>
+<li><p>In a shell write <code>make dendrogramPlot</code> and it will run <code>06_dendrogramPlot.R</code> script that depends on <code>02_variableBining.R</code> script which subsequently depends on <code>01_dataTransformation.R</code>. You should see the followings:</p>
+
+<ul>
+<li><a href="dendrogram.png"><code>dendrogram.png</code></a> a dendrogram figure that identifies correlations between the observations of continous variables.</li>
+<li><a href="hoursWeek_educationNum.png"><code>hoursWeek_educationNum.png</code></a> that demonstrates the relationship between hours per week with the education level.</li>
+</ul></li>
+</ul>
+
+<h3>Creating HTML from R <code>markdown</code>.</h3>
+
+<p>To create this HTML file, you need to download R <code>markdown</code> file <a href=""><code>stat545a-2013-hw06_mohdabulbasher-abd.Rmd</code></a>. In a shell, give this command <code>make rmdToHtml</code> and you should see the html file <a href="stat545a-2013-hw06_mohdabulbasher-abd.html"><code>stat545a-2013-hw06_mohdabulbasher-abd.html</code></a>.</p>
+
+<h3>Conclusion</h3>
+
+<ul>
+<li><p>To run all the scripts in one command, write in a shell <code>make</code> or <code>make all</code> and you should see after running the pipeline:</p>
+
+<ul>
+<li><code>adult_clean.txt</code>.</li>
+<li><code>adult_clean_binned.txt</code>.</li>
+<li><code>adult_clean_selected.txt</code>.</li>
+<li><code>allInone.png</code>.</li>
+<li><code>barplot_educationByagedesc.png</code>.</li>
+<li><code>barplot_educationByemptype.png</code>.</li>
+<li><code>barplot_educationBymarital.png</code>.</li>
+<li><code>barplot_educationByobs.png</code>.</li>
+<li><code>barplot_educationByobsprop.png</code>.</li>
+<li><code>barplot_educationByrace.png</code>.</li>
+<li><code>boxplot_educationByage.png</code>.</li>
+<li><code>worldmap.png</code>.</li>
+<li><code>worldmap_interestedcountries.png</code>.</li>
+<li><code>worldmap_medianAge.png</code>.</li>
+<li><code>dendrogram.png</code>.</li>
+<li><code>hoursWeek_educationNum.png</code>.</li>
+</ul></li>
+<li><p>To re-run the scripts or remove the outputs, write in a shell <code>make clean</code>.</p></li>
+</ul>
+
+</body>
+
+</html>
+
