@@ -21,9 +21,9 @@ In this project, we will use adult data set which is available from this [`websi
 ### Transforming the `adult` data
 * We have three scripts that perform cleanings:
 
-    - `01_dataTransformation.R`. This script cleans the raw data `adult_raw.txt`. To run this script, in a shell write `make adult_clean`. You should see a new data named by [`adult_clean.txt`]().
-    - `02_variableBining.R`. This script performs age binning on `adult_clean.txt`. Thus it depends on `01_dataTransformation.R`. The resulted data is required by `04_aggregatePlot.R` and `06_dendrogramPlot.R`. To run this script, in a shell write `make adult_clean_binned`. You should see a new data named by [`adult_clean_binned.txt`]().
-    - `03_variableSelections.R`. This script selects important variables and removes the redundant ones on `adult_clean_binned.txt`. Thus it depends on `02_variableBining.R`. This data is required by `05_mapPlot.R`. To run this script, in a shell write `make adult_clean_selected`. You should see a new data named by [`adult_clean_selected.txt`]().
+    - `01_dataTransformation.R`. This script cleans the raw data `adult_raw.txt`. To run this script, in a shell write `make adult_clean`. You should see a new data named by [`adult_clean.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean.txt).
+    - `02_variableBining.R`. This script performs age binning on `adult_clean.txt`. Thus it depends on `01_dataTransformation.R`. The resulted data is required by `04_aggregatePlot.R` and `06_dendrogramPlot.R`. To run this script, in a shell write `make adult_clean_binned`. You should see a new data named by [`adult_clean_binned.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean_binned.txt).
+    - `03_variableSelections.R`. This script selects important variables and removes the redundant ones on `adult_clean_binned.txt`. Thus it depends on `02_variableBining.R`. This data is required by `05_mapPlot.R`. To run this script, in a shell write `make adult_clean_selected`. You should see a new data named by [`adult_clean_selected.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean_selected.txt).
 
 ### Plotting simple figures using `ggplot2`
 * In a shell write `make aggregatePlot` and it will run `04_aggregatePlot.R` script that depends on `02_variableBining.R` script which subsequently depends on `01_dataTransformation.R`. You should see the followings:
