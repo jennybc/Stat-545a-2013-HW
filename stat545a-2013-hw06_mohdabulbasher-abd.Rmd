@@ -1,79 +1,342 @@
 STAT 545A Homework 6
 ========================================================
-In this project, we will use adult data set which is available from this [`website`](http://archive.ics.uci.edu/ml/datasets/Adult). The data is already being transformed and cleaned. However, we need to perform further cleanings to demonstrate the results that we obtained.
+In this project, we will use adult data set which is available from this [`UCI Machine Learning Repository`](http://archive.ics.uci.edu/ml/datasets/Adult). The data is already being transformed and cleaned. However, we need to perform further cleanings in order to demonstrate the results that we have obtained. You can replicate my analysis following the `README` manual from [Github](https://github.com/atante/Stat-545a-2013-HW.git).
 
-### How to replicate my analysis?
-* Download the following files, from [Github](https://github.com/atante/Stat-545a-2013-HW.git), into an empty directory:
 
-    - Input data: [`adult_raw.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_raw.txt)
-    - Scripts: [`01_dataTransformation.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/01_dataTransformation.R), [`02_variableBining.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/02_variableBining.R), [`03_variableSelections.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/03_variableSelections.R), [`04_aggregatePlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/04_aggregatePlot.R), [`05_mapPlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/05_mapPlot.R), and [`06_dendrogramPlot.R`](https://github.com/atante/Stat-545a-2013-HW/blob/master/06_dendrogramPlot.R)
-    - Makefile: [`Makefile`](https://github.com/atante/Stat-545a-2013-HW/blob/master/Makefile)
-    - R `markdown` file: [`stat545a-2013-hw06_mohdabulbasher-abd.Rmd`](https://github.com/atante/Stat-545a-2013-HW/blob/master/stat545a-2013-hw06_mohdabulbasher-abd.Rmd)
-
-* You might need to right click on a file to see or to download it on your machine.
-* After you have downloaded all the files, you can manage to run scripts that does the followings:
-
-    - Transforming the `adult` data.
-    - Plotting simple figures using `ggplot2`.
-    - Plotting world map using `ggplot2`.
-    - Plotting dendrogram using `ggplot2`.
-    - Creating HTML from R `markdown`.
-    
 ### Transforming the `adult` data
-* We have three scripts that perform cleanings:
+For a particular project, we usually end up analyzing a collection of data, transforming it and storing different forms of information about the data. It is convenient to introduce encapsulation which packages all of our data into a container that is used at a later time and thus protecting our raw data. In this project, we use R's environment concept and give it a name as below:
+```{r}
+main.en <- new.env()
+```
+After that, data is placed into the container and we can access the data using `$` notations. However, to operate on variables within an environment without using the `$` notation we can use `evalq()`. For example, let us load our data in main.en container and assign the variables with suitable names as follows:
+```{r results='asis'}
+require(package=xtable)
+evalq({  
+  adult.data <- read.table("adult_raw.txt")
+  names(adult.data) <- c("age", "workclass", "fnlwgt", "education", "educationNum", "maritalStatus", "occupation", "relationship", "race", "sex", "capitalGain", "capitalLoss", "hoursPerWeek", "nativeCountry", "grossIncome")
+ print(xtable(head(adult.data)), type = "html", include.rownames = TRUE)
+}, main.en)
+```
+We remove `,` from each value in the data and change the mode of the following variables to numerics: age, fnlwgt, educationNum, capitalGain, capitalLoss, and hoursPerWeek.
+```{r results='asis'}
+evalq({
+  adult.data$age <- as.numeric(gsub(",","", adult.data$age))
+  adult.data$workclass <- gsub(",","", adult.data$workclass)
+  adult.data$fnlwgt <- as.numeric(gsub(",","", adult.data$fnlwgt))
+  adult.data$education <- gsub(",","", adult.data$education)
+  adult.data$educationNum <- as.numeric(gsub(",","", adult.data$educationNum))
+  adult.data$maritalStatus <- gsub(",","", adult.data$maritalStatus)
+  adult.data$occupation <- gsub(",","", adult.data$occupation)
+  adult.data$relationship <- gsub(",","", adult.data$relationship)
+  adult.data$race <- gsub(",","", adult.data$race)
+  adult.data$sex <- gsub(",","", adult.data$sex)
+  adult.data$capitalGain <- as.numeric(gsub(",","", adult.data$capitalGain))
+  adult.data$capitalLoss <- as.numeric(gsub(",","", adult.data$capitalLoss))
+  adult.data$hoursPerWeek <- as.numeric(gsub(",","", adult.data$hoursPerWeek))
+  adult.data$nativeCountry <- gsub(",","", adult.data$nativeCountry)
+  adult.data$grossIncome <- gsub(",","", adult.data$grossIncome)
+  print(xtable(head(adult.data)), type = "html", include.rownames = TRUE)
+},main.en)
+```
+Our data is already being cleaned and the missing values are filled with either `?`, for categorial values, or `0`, for numerical data. However, we treate any `?` as missing values and remove them from the data.
+```{r results='asis'}
+evalq({
+  adult.data$workclass <- gsub("[?]", NA, adult.data$workclass)
+  adult.data$education <- gsub("[?]", NA, adult.data$education)
+  adult.data$maritalStatus <- gsub("[?]", NA, adult.data$maritalStatus)
+  adult.data$occupation <- gsub("[?]", NA, adult.data$occupation)
+  adult.data$relationship <- gsub("[?]", NA, adult.data$relationship)
+  adult.data$race <- gsub("[?]", NA, adult.data$race)
+  adult.data$sex <- gsub("[?]", NA, adult.data$sex)
+  adult.data$nativeCountry <- gsub("[?]", NA, adult.data$nativeCountry)
+  adult.data <- na.omit(adult.data)
+},main.en)
+```
+Now, let us explore the transformed data to discover various insightful knowledge such as dimensions, the variables names, its boundaries, its characteristics...etc.
+```{r eval=FALSE}
+evalq({
+  head(adult.data)
+  tail(adult.data)
+  dim(adult.data) 
+  names(adult.data)
+  str(adult.data)
+  summary(adult.data)
+},main.en)
+```
+To obtain more detailed summary of the numerical data, we apply the `basicStats()` function from `fBasics` package.
+```{r}
+require(fBasics)
+```
+```{r results='asis'}
+evalq({
+  print(xtable(basicStats(adult.data$age)), type = "html", include.colnames= FALSE, include.rownames = TRUE)
+},main.en)
+```
+In analyzing data, it is very useful to transform continuous numeric variables into a specific set of meaningful categoric values for subsequent analysis especially to reduce the effects of minor observation errors. This operation is called `binning`. Lets apply binning to our age variable by first recording the range of this continous data.
+```{r results='asis'}
+evalq({
+  print(range(adult.data$age))
+  },main.en)
+```
+We observe that the range of age in our dataset is 17 and maximum is 90. Therefore, we apply binning to age variable to categorize it into four distinct intervals that are chosen subjectively as follows:
+```{r results='asis'}
+evalq({
+  adult.data$agedesc = ifelse(test = adult.data[,"age"] <= 22, yes = "youth", no = ifelse(test = adult.data[,"age"] > 22 & adult.data[,"age"]  <= 35, yes = "adult", no = ifelse(test = adult.data[,"age"] > 35 & adult.data[,"age"] <= 55, yes = "adultToOld", no = "old")))
+   print(xtable(head(adult.data)), type = "html", include.rownames = TRUE)
+},main.en)
+```
+We keep certain variables in our data and remove the redundant ones as follows:
+```{r eval=FALSE}
+evalq({
+  adult.data <- data.frame(adult.data[,c("age", "workclass", "education", "educationNum", "maritalStatus", "occupation", "relationship", "race", "sex", "nativeCountry")])
+},main.en)
+```
 
-    - `01_dataTransformation.R`. This script cleans the raw data `adult_raw.txt`. To run this script, in a shell write `make adult_clean`. You should see a new data named by [`adult_clean.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean.txt).
-    - `02_variableBining.R`. This script performs age binning on `adult_clean.txt`. Thus it depends on `01_dataTransformation.R`. The resulted data is required by `04_aggregatePlot.R` and `06_dendrogramPlot.R`. To run this script, in a shell write `make adult_clean_binned`. You should see a new data named by [`adult_clean_binned.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean_binned.txt).
-    - `03_variableSelections.R`. This script selects important variables and removes the redundant ones on `adult_clean_binned.txt`. Thus it depends on `02_variableBining.R`. This data is required by `05_mapPlot.R`. To run this script, in a shell write `make adult_clean_selected`. You should see a new data named by [`adult_clean_selected.txt`](https://github.com/atante/Stat-545a-2013-HW/blob/master/adult_clean_selected.txt).
 
 ### Plotting simple figures using `ggplot2`
-* In a shell write `make aggregatePlot` and it will run `04_aggregatePlot.R` script that depends on `02_variableBining.R` script which subsequently depends on `01_dataTransformation.R`. You should see the followings:
+We create one additional container to hold data for ploting purposes and to perform other applications on our data without altering the main data. Doing so we demonstrate the inheritance structure in our coding scheme.
+```{r}
+plot.en <- new.env(parent=main.en)
+```
+We require the following packages.
+```{r}
+require(plyr)
+require(ggplot2)
+```
+Let us plot our first figure which depicts the education level per gender
+```{r fig.width=8}
+evalq({
+  edulevelPergender <- ddply(.data = adult.data,
+                             .variables= ~ educationNum + sex, 
+                             .fun = function(x){count <- nrow(x)
+                                                return(data.frame(count))
+                                                })
+  plotbar <- ggplot(adult.data, aes(x=factor(education),fill=factor(sex)))
+  plotbar <- plotbar + ggtitle("Education level per gender") 
+  plotbar <- plotbar + geom_bar(position="dodge") + coord_flip() 
+  plotbar <- plotbar + xlab("Education") + ylab("Number of observations")
+  plotbar <- plotbar + scale_fill_discrete(name = "Gender")
+  plotbar
+  }, envir=plot.en)
+```
+We see that the above figure does not represent the ratio of each gender with the level of education in the dataset for that particular gender. Therefore, we use proportions of each gender in the dataset according to their level of education and re-plot the results.
+```{r fig.width=8}
+evalq({
+  nPerSex <- count(df=adult.data, ~ sex)
+  adult.data.modified <- ddply(adult.data, ~ education + sex, 
+                               summarise,proportion= length(education))
+  adult.data.modified$proportion = ifelse(test= adult.data.modified$sex=="Male"
+                                          ,yes=adult.data.modified$proportion
+                                          /nPerSex$freq[2], 
+                                          no=adult.data.modified$proportion
+                                          /nPerSex$freq[1])
+  plotbarprop <- ggplot(adult.data.modified, aes(x=factor(education),
+                                                 y=proportion, 
+                                                 fill=factor(sex)))
+  plotbarprop <- plotbarprop + ggtitle("Education level per gender")
+  plotbarprop <- plotbarprop + geom_bar(position = "dodge") + coord_flip()
+  plotbarprop <- plotbarprop + xlab("Education") + ylab("Proportion")
+  plotbarprop <- plotbarprop + scale_fill_discrete(name = "Gender")
+  plotbarprop
+  }, envir=plot.en)
+```
+Now, we observe similar proportions for each gender with the level of education. In fact, females are more educated in some levels such as at 11th grade. This piece of information did not reveal to us in our previous figure.
 
-    - [`allInone.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/allInone.png) that illustrates on how to put several figures onto one panel.
-    - [`barplot_educationByagedesc.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByagedesc.png) that represents education level with specific age intervals
-    - [`barplot_educationByemptype.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByemptype.png) which represents the type of employment with level of educations.
-    - [`barplot_educationBymarital.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationBymarital.png) which represents the status of relationships with level of educations.
-    - [`barplot_educationByobs.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByobs.png) which represents the education level per gender.
-    - [`barplot_educationByobsprop.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByobsprop.png) which represents the proportions of each gender according to their level of education.
-    - [`barplot_educationByrace.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/barplot_educationByrace.png) which represents the number of educated people based on their ethnicity.
-    - [`boxplot_educationByage.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/boxplot_educationByage.png) which represents an overview of how the age variable is distributed with gender.
+We use boxplot that provides a graphical overview of how the observations of a particular variable, age in our case, are distributed per gender.
+```{r fig.width=8}
+evalq({
+  plotbox <- ggplot(adult.data) + aes(x= factor(agedesc),y = age) 
+  plotbox <- plotbox + geom_boxplot(aes(fill=sex),outlier.colour="red",
+                                    outlier.shape=4)
+  plotbox <- plotbox + ggtitle("Education level with Age per gender")
+  plotbox <- plotbox + xlab("Education") + ylab("Age")
+  plotbox <- plotbox + scale_fill_discrete(name = "Gender") +  coord_flip() 
+  plotbox
+  }, envir=plot.en)
+```
+Here we plot education level with specific age intervals.
+```{r fig.width=8}
+evalq({
+  p1 <- ggplot(adult.data) + aes(education, fill= factor(sex)) 
+  p1 <- p1 + ggtitle("Education level with each Age interval per gender")
+  p1 <- p1 + geom_bar() + xlab("Education") + ylab("Number of observations")
+  p1 <- p1 + scale_fill_discrete(name = "Gender") + coord_flip() 
+  p1 <- p1 + facet_wrap(~ agedesc) 
+  p1
+  }, envir=plot.en)
+```
+Plotting the number of educated people based on their ethnicity.
+```{r fig.width=8}
+evalq({
+  p2 <- ggplot(adult.data) + aes(education, fill= race) 
+  p2 <- p2 + ggtitle("Education level with Race")
+  p2 <- p2 + geom_bar() + xlab("Education") + ylab("Number of observations")
+  p2 <- p2 + scale_fill_brewer("Race") + coord_flip()  
+  p2
+  }, envir=plot.en)
+```
+Gradient colors are not a convenient solution in plotting the above figure. We plot the status of relationships with level of educations and we use `palette` option:
+```{r fig.width=8}
+evalq({
+  p3 <- ggplot(adult.data) + aes(education, fill= maritalStatus)
+  p3 <- p3 + ggtitle("Education level with Marital Status")
+  p3 <- p3 + geom_bar() + xlab("Education") + ylab("Number of observations")
+  p3 <- p3 + scale_fill_brewer("Marital Status",palette="Dark2") + coord_flip()
+  p3
+  }, envir=plot.en)
+```
+Exploring the type of employment with level of educations:
+```{r fig.width=8}
+evalq({
+  p4 <- ggplot(adult.data) + aes(education, fill= workclass) 
+  p4 <- p4 + ggtitle("Education level with Employment type")
+  p4 <- p4 + geom_bar() + xlab("Education") + ylab("Number of observations")
+  p4 <- p4 + scale_fill_brewer("Work Class",palette="Dark2")+ coord_flip()
+  p4
+  }, envir=plot.en)
+```
+`gridExtra` is an interesting package that puts several figures onto one panel. As an example:
+```{r}
+require(gridExtra)
+```
+```{r fig.width=12}
+evalq({
+  grid.arrange(plotbox,p2, p3, p4, ncol=2, main="Plotting in one panel")
+  },envir=plot.en)
+```
 
-### Plotting world map using `ggplot2`    
-* In a shell write `make mapPlot` and it will run `05_mapPlot.R` script that depends on `03_variableSelections.R` script which subsequently depends on `02_variableBining.R` and `01_dataTransformation.R`. You should see the followings:
 
-    - [`worldmap.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap.png) which represents the world map filled with regions.
-    - [`worldmap_interestedcountries.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap_interestedcountries.png) which represents the filled countries that are only recorded in adult data.
-    - [`worldmap_medianAge.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/worldmap_medianAge.png) which represents the world map according to the median age per country.
+### Plotting world map using `ggplot2`
+We load the following packages.
+```{r}
+require(ggmap)
+require(mapproj)
+```
+We copy map data into plot.en container
+```{r}
+evalq({
+  map.world <- map_data(map = "world")
+},envir=plot.en)
+```
+Let us draw a map using ggplot2. We first note that the countries in adult data need to be mapped with regions in the map data. Therefore, several issues need to be handled properly:
+  - some countries in our data does not exist in map data, for example Scotland. We merge these countries with their closest neighbours.
+  - names of countries are different or abbreviated in both data, for example USA is used in map data and it is renamed to United-States in adult data.
+  - countries in adult data are misspelled or are not complete, for example in our data there is a country named by south but we do not have enough information to guess whether it is the south korea or the south africa. Another example, the country `Outlying-US(Guam-USVI-etc)` does not have any equivalent with map data.
+```{r}
+evalq({
+  adult.data$nativeCountry <- gsub("(Outlying-US\\(Guam-USVI-etc\\))", NA, adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("England", "UK", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("Scotland", "UK", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("Hong", "China", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("Taiwan", "China", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("Trinadad&Tobago", "Tobago", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("United-States", "USA", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("Puerto-Rico", "Puerto Rico", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("Holand-Netherlands", "Netherlands", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("El-Salvador", "El Salvador", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("Dominican-Republic", "Dominican Republic", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("Columbia", "Colombia", adult.data$nativeCountry)
+  adult.data$nativeCountry <- gsub("South", "South Korea", adult.data$nativeCountry)
+  adult.data <- na.omit(adult.data)
+},plot.en)
+```
+After we address the above shortcomings, let's begin to plot our first world map.
+```{r fig.width=10}
+evalq({
+  plot <- ggplot(map.world, aes(x = long, y = lat, group = group, 
+                                fill = region))
+  plot <- plot + ggtitle("World, filled with regions")
+  plot <- plot + geom_polygon() + theme(legend.position="none")
+  plot <- plot + xlab("Longitude") + ylab("Latitude")
+  plot
+},envir=plot.en)
+```
+Interestingly, we can also represent the filled countries that are only recorded in adult data as follows:
+```{r fig.width=10}
+evalq({
+  map.world$availableCountry <- ifelse(test=map.world$region %in% 
+                                       adult.data$nativeCountry,yes="yes",
+                                       no="no")
+  
+  plot <- ggplot(map.world, aes(x = long, y = lat, group = group, 
+                                fill = availableCountry))
+  plot <- plot + ggtitle("World, filled with interested countries")
+  plot <- plot + geom_polygon() + theme(legend.position="none") 
+  plot <- plot + xlab("Longitude") + ylab("Latitude")
+  plot
+  },envir=plot.en)
+```
+Let us perform more fancy work by plotting the world map according to the median age per country.
+```{r fig.width=10}
+evalq({
+  tmp.df <- ddply(adult.data, ~ nativeCountry, summarise, 
+                  medianAge=median(age), meanAge = mean(age))
+  map.world <- merge(x=map.world, y=tmp.df, by.x= "region", by.y="nativeCountry",all=TRUE)
+  map.world$medianAge[is.na(map.world$medianAge)] <- 0 # other countries median
+                                                       # are set to 0
+  map.world$meanAge[is.na(map.world$meanAge)] <- 0     # other countries mean
+                                                       # are set to 0
+  map.world <- arrange(map.world,order)   # We need to sort the map.world data 
+                                          # according to the order variable for    
+                                          # the purpose of plotting 
+  plot <- ggplot(map.world, aes(x = long, y = lat, group = group, 
+                                fill =medianAge))
+  plot <- plot + ggtitle("Median age for specific countries")
+  plot <- plot + geom_polygon() + scale_fill_gradientn("Median Age",
+                                                       colours=rainbow(7),
+                                                       limits=c(10,60))
+  plot <- plot + xlab("Longitude") + ylab("Latitude")
+  plot
+  },envir=plot.en)
+```
+
 
 ### Plotting dendrogram using `ggplot2`    
-* In a shell write `make dendrogramPlot` and it will run `06_dendrogramPlot.R` script that depends on `02_variableBining.R` script which subsequently depends on `01_dataTransformation.R`. You should see the followings:
+In our dataset, we identify some kind of relationships or correlations between the observations of continous variables. Let us explore the relationships between numerical variables using a tree-like structure known as a `dendrogram`. For this, we need to load the following packages:
+```{r}
+require(grid)
+require(ggdendro)
+```
+We first identify the numerical variables and then perform correlation between them. Afterwards, we apply hclust function to the results in order to create an object with hierarchical structure that will be used to plot dendrogram.
+```{r}
+evalq({
+  numerics <- c(1,5,11:13)
+  cr <-cor(x=adult.data[numerics],use="pairwise",method="pearson")
+  hc <- hclust(dist(cr),method='average')
+  ddata <- dendro_data(hc)
+  
+  plot <- ggplot() + geom_segment(data = segment(ddata), 
+                                  aes_string(x = "x", y = "y", xend = "xend", 
+                                             yend = "yend"),colour="grey",
+                                  lwd = 1)
+  plot <- plot + geom_text(data = label(ddata), 
+                           aes_string(x = "x", y = "y", label = "label"),
+                           fontface=3, colour= "tomato", cex = 3.5, hjust = 1,
+                           vjust=0, angle = 0) 
+  plot <- plot + scale_y_continuous(expand=c(0.2, 0)) 
+  plot <- plot + labs(title="Variable Correlation Clusters\nadult data using Pearson") 
+  plot <- plot + theme_bw()+ theme(axis.ticks = element_blank(), 
+                                   axis.text.y = element_blank())
+  plot <- plot + geom_hline(data = segment(ddata),xintercept = "x", 
+                            colour = "orange") + ylab(NULL) + xlab(NULL)
+  plot <- plot + coord_flip()
+  plot
+  },envir=plot.en)
+```
+The plot lists the variables in the left column. The variables are then linked together according to the strength of their relationships. The range of x-axis, (0, 1.5), gives an indication of the level of correlation between variables, with shorter heights indicating stronger correlations. We can observe that hoursPerWeek and educationNum are closely correlated. The variables age and capitalLoss have some higher level of correlation amongst themselves.
 
-    - [`dendrogram.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/dendrogram.png) a dendrogram figure that identifies correlations between the observations of continous variables.
-    - [`hoursWeek_educationNum.png`](https://raw.github.com/atante/Stat-545a-2013-HW/master/hoursWeek_educationNum.png) that demonstrates the relationship between hours per week with the education level.
-
-### Creating HTML from R `markdown`.
-To create this HTML file, give this command in a shell `make rmdToHtml` and you should see the html file [`stat545a-2013-hw06_mohdabulbasher-abd.html`](https://raw.github.com/atante/Stat-545a-2013-HW/master/stat545a-2013-hw06_mohdabulbasher-abd.html).
-
-### Conclusion
-* To run all the scripts in one command, write in a shell `make` or `make all` and you should see after running the pipeline:
-
-    - `adult_clean.txt`.
-    - `adult_clean_binned.txt`.
-    - `adult_clean_selected.txt`.
-    - `allInone.png`.
-    - `barplot_educationByagedesc.png`.
-    - `barplot_educationByemptype.png`.
-    - `barplot_educationBymarital.png`.
-    - `barplot_educationByobs.png`.
-    - `barplot_educationByobsprop.png`.
-    - `barplot_educationByrace.png`.
-    - `boxplot_educationByage.png`.
-    - `worldmap.png`.
-    - `worldmap_interestedcountries.png`.
-    - `worldmap_medianAge.png`.
-    - `dendrogram.png`.
-    - `hoursWeek_educationNum.png`.
-    
-* To re-run the scripts or remove the outputs, write in a shell `make clean`.
+Although, the above correlation defines the relationships between the numerical data, this does not provide true information because much of our data are missing and replaced by 0. But to illustrate the correlation, we plot the relationship between hours per week with the education level ignoring the whether information is accurate or not. 
+```{r}
+evalq({
+  plot <- ggplot(data=adult.data, aes(x=hoursPerWeek,
+                                      y=educationNum,colour=hoursPerWeek)) 
+  plot <- plot + geom_point(alpha = 1/10) 
+  plot <- plot + ggtitle("Hours per Week vs Level of Education")
+  plot <- plot + stat_smooth(method="lm", se=FALSE, colour = "red", size = 1)
+  plot <- plot + xlab("Education Level") + ylab("Hours per Week") 
+  plot <- plot + theme(legend.position="none") 
+  plot
+},envir=plot.en)
+```
 
 > Thank you Jenny for being the person who taught us how to appreciate the art of R language. We had a great time last six weeks.
