@@ -1,6 +1,6 @@
 STAT 545A Homework 6
 ========================================================
-In this project, we will use adult data set which is available from this [`website`](http://archive.ics.uci.edu/ml/datasets/Adult). The data is already being transformed and cleaned. However, we need to perform further cleanings to demonstrate the results that we obtained.
+In this project, we will use adult data set which is available from the [UC Irvine Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Adult). The data has already been transformed and cleaned. However, we need to perform further cleaning.
 
 ### How to replicate my analysis?
 * Download the following files into an empty directory:
