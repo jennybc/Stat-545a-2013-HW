@@ -2,6 +2,8 @@ STAT 545A Homework 6
 ========================================================
 In this project, we will use adult data set which is available from the [UC Irvine Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Adult). The data has already been transformed and cleaned. However, we need to perform further cleaning.
 
+My final report is published to [RPubs](http://rpubs.com/meitantei/stat545a-2013-hw06_mohdabulbasher-abd).
+
 ### How to replicate my analysis?
 * Download the following files into an empty directory:
 
