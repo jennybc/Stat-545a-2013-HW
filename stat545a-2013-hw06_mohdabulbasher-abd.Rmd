@@ -94,7 +94,7 @@ evalq({
 
 
 ### Plotting simple figures using `ggplot2`
-We create one additional container to hold data for ploting purposes and to perform other applications on our data without altering the main data. Doing so we demonstrate the inheritance structure in our coding scheme.
+We create one additional container to hold data for plotting purposes and to perform other applications on our data without altering the main data. Doing so we demonstrate the inheritance structure in our coding scheme.
 ```{r}
 plot.en <- new.env(parent=main.en)
 ```
