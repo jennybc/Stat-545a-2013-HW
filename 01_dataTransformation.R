@@ -4,6 +4,7 @@ main.en <- new.env()
 # After that, data is placed into the container and we can access the data using $ notations. However, to operate on variables within an environment without using the $ notation we can use evalq(). For example, let us load our data in main.en container and assign the variables with suitable names as follows:
 evalq({  
   adult.data <- read.table("adult_raw.txt")
+  #adult.data <- read.table("adult_raw.txt", sep = ",", strip.white = TRUE)
   names(adult.data) <- c("age", "workclass", "fnlwgt", "education", "educationNum", "maritalStatus", "occupation", "relationship", "race", "sex", "capitalGain", "capitalLoss", "hoursPerWeek", "nativeCountry", "grossIncome")
 }, main.en)
 
